@@ -1,7 +1,7 @@
 import { throttle } from 'lodash';
 
 const form = document.querySelector('.feedback-form');
-const userInfo = {};
+let userInfo = {};
 
 const saveToLS = (key, value) => {
   try {
@@ -30,8 +30,10 @@ const removeFromLS = key => {
   }
 };
 
+
 const fillFormData = e => {
   const storageData = loadFromLS('feedback-form-state');
+  userInfo = storageData;
   if (storageData) {
     for (const prop in storageData) {
       form.elements[prop].value = storageData[prop];
@@ -55,6 +57,9 @@ form.addEventListener(
 form.addEventListener('submit', e => {
   e.preventDefault();
   console.log(userInfo);
+  // userInfo = {};
   form.reset();
   removeFromLS('feedback-form-state');
 });
+
+
